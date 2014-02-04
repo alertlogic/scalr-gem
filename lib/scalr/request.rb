@@ -326,7 +326,7 @@ module Scalr
       http = Net::HTTP.new(uri.host, uri.port)
       #http.set_debug_output(Scalr.debug)  if Scalr.debug
       http.use_ssl = !uri.scheme.match(/https/i).nil?
-      url = "/?#{query_string}&Signature=#{@signature}"
+      url = "#{uri.path}?#{query_string}&Signature=#{@signature}"
       Scalr.debug.puts(url)  if Scalr.debug
       response = http.get(url, {})
       if Scalr.debug
