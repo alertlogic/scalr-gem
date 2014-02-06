@@ -55,6 +55,7 @@ module Scalr
     V210 = '2.1.0'
     V220 = '2.2.0'
     V230 = '2.3.0'
+    V240 = '2.4.0'
 
     ACTIONS = {
       :apache_vhost_create => {
@@ -150,6 +151,22 @@ module Scalr
           :inputs => {:farm_id => true, :start_from => false, :records_limit => false},
           :outputs => { :path => 'eventset@item' }
       },
+      
+      :farm_create => {
+          :name => 'FarmCreate', :version => V240,
+          :inputs => {:farm_name => true, :roles_launch_order => false, :description => false},
+          :outputs => { :path => 'result' }
+      },
+      :farm_update_parameter => {
+          :name => 'FarmUpdateParameter', :version => V240,
+          :inputs => {:farm_name => true, :param_name => true, :param_value => true},
+          :outputs => { :path => 'result' }
+      },
+      :farm_list_parameters => {
+          :name => 'FarmListParameters', :version => V240,
+          :inputs => {},
+          :outputs => { :path => 'result' }
+      },
       :farm_clone => {
           :name => 'FarmClone', :version => V230,
           :inputs => {:farm_id => true},
@@ -180,6 +197,23 @@ module Scalr
           :inputs => {},
           :outputs => { :path => 'farmset@item', :object => Scalr::ResponseObject::FarmSummary}
       },
+      
+      :farm_add_role => {
+        :name => 'FarmAddRole', :version => V240,
+        :inputs => {:farm_name => true, :platform => true, :cloud_location => true, :role_name => true, :farm_role_name => true},
+        :outputs => { :path => 'result' }
+      },
+      :farm_role_list_parameters => {
+          :name => 'FarmRoleListParameters', :version => V240,
+          :inputs => {},
+          :outputs => { :path => 'result' }
+      },
+      :farm_role_update_parameters => {
+          :name => 'FarmRoleUpdateParameters', :version => V240,
+          :inputs => { :farm_name => true, :farm_role_name => true, :platform => true, :role_parameters => true },
+          :outputs => { :path => 'result' }
+      },
+      
       :global_variable_set => {
           :name => 'GlobalVariableSet', :version => V230,
           :inputs => {:farm_id => false, :farm_role_id => false, :param_name => true, :param_value => true},
@@ -256,14 +290,17 @@ module Scalr
         :async                          => 'Async',
         :bundle_task_id                 => 'BundleTaskID',
         :config_variables               => 'ConfigVariables',
+        :cloud_location                 => 'CloudLocation',
         :date                           => 'Date',
         :decrease_min_instances_setting => 'DecreaseMinInstancesSetting',
         :deployment_task_id             => 'DeploymentTaskID',
         :document_root_dir              => 'DocumentRootDir',
         :domain_name                    => 'DomainName',
         :enable_ssl                     => 'EnableSSL',
+        :farm_name                      => 'FarmName',
         :farm_id                        => 'FarmID',
         :farm_role_id                   => 'FarmRoleID',
+        :farm_role_name                 => 'FarmRoleName',
         :graph_type                     => 'GraphType',
         :image_id                       => 'ImageID',
         :increase_max_instances         => 'IncreaseMaxInstances',
@@ -286,6 +323,7 @@ module Scalr
         :revision                       => 'Revision',
         :role_id                        => 'RoleID',
         :role_name                      => 'RoleName',
+        :role_parameters                => 'RoleParameters',
         :script_id                      => 'ScriptID',
         :server_id                      => 'ServerID',
         :source_id                      => 'SourceID',
@@ -390,11 +428,10 @@ module Scalr
       end
       
       def set_signature!
-        string_to_sign = query_string.gsub('=','').gsub('&','')
+        string_to_sign = URI.unescape(query_string.gsub('=','').gsub('&',''))
         hmac = HMAC::SHA256.new(@access_key)
         hmac.update(string_to_sign)
-        @signature = URI.escape(Base64.encode64(hmac.digest).chomp, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-      end
-      
+        @signature = URI.escape(Base64.encode64(hmac.digest).chomp, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))        
+      end      
   end
 end
