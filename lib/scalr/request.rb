@@ -154,7 +154,7 @@ module Scalr
       
       :farm_create => {
           :name => 'FarmCreate', :version => V240,
-          :inputs => {:farm_name => true, :roles_launch_order => false, :description => false},
+          :inputs => {:env_id => false, :farm_name => true, :roles_launch_order => false, :description => false},
           :outputs => { :path => 'result' }
       },
       :farm_update_parameter => {
@@ -297,6 +297,7 @@ module Scalr
         :document_root_dir              => 'DocumentRootDir',
         :domain_name                    => 'DomainName',
         :enable_ssl                     => 'EnableSSL',
+        :env_id                         => 'EnvId',
         :farm_name                      => 'FarmName',
         :farm_id                        => 'FarmID',
         :farm_role_id                   => 'FarmRoleID',
