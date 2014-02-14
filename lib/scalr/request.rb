@@ -325,6 +325,7 @@ module Scalr
         :role_id                        => 'RoleID',
         :role_name                      => 'RoleName',
         :role_parameters                => 'RoleParameters',
+        :roles_launch_order             => 'RolesLaunchOrder',
         :script_id                      => 'ScriptID',
         :server_id                      => 'ServerID',
         :source_id                      => 'SourceID',
