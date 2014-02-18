@@ -213,6 +213,11 @@ module Scalr
           :inputs => { :farm_name => true, :farm_role_name => true, :platform => true, :role_parameters => true },
           :outputs => { :path => 'result' }
       },
+      :farm_role_set_scripts => {
+          :name => 'FarmRoleSetScripts', :version => V240,
+          :inputs => { :farm_name => true, :farm_role_name => true, :scripts => true },
+          :outputs => { :path => 'result' }
+      },
       
       :global_variable_set => {
           :name => 'GlobalVariableSet', :version => V230,
@@ -311,7 +316,7 @@ module Scalr
         :key                            => 'Key',
         :name                           => 'Name',
         :object_id                      => 'ObjectID',
-        :object_type                    => 'ObjectType',
+        :object_type                    => 'ObjectType',        
         :param_name                     => 'ParamName',
         :param_value                    => 'ParamValue',
         :platform                       => 'Platform',
@@ -326,6 +331,7 @@ module Scalr
         :role_name                      => 'RoleName',
         :role_parameters                => 'RoleParameters',
         :roles_launch_order             => 'RolesLaunchOrder',
+        :scripts                        => 'Scripts',
         :script_id                      => 'ScriptID',
         :server_id                      => 'ServerID',
         :source_id                      => 'SourceID',
